@@ -1,0 +1,12 @@
+C:\Users\Павел\RiderProjects\CustomDictionary\CustomDictionary\obj\Debug\net6.0\CustomDictionary.csproj.AssemblyReference.cache
+C:\Users\Павел\RiderProjects\CustomDictionary\CustomDictionary\obj\Debug\net6.0\CustomDictionary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Павел\RiderProjects\CustomDictionary\CustomDictionary\obj\Debug\net6.0\CustomDictionary.AssemblyInfoInputs.cache
+C:\Users\Павел\RiderProjects\CustomDictionary\CustomDictionary\obj\Debug\net6.0\CustomDictionary.AssemblyInfo.cs
+C:\Users\Павел\RiderProjects\CustomDictionary\CustomDictionary\obj\Debug\net6.0\CustomDictionary.csproj.CoreCompileInputs.cache
+C:\Users\Павел\RiderProjects\CustomDictionary\CustomDictionary\bin\Debug\net6.0\CustomDictionary.deps.json
+C:\Users\Павел\RiderProjects\CustomDictionary\CustomDictionary\bin\Debug\net6.0\CustomDictionary.dll
+C:\Users\Павел\RiderProjects\CustomDictionary\CustomDictionary\bin\Debug\net6.0\ref\CustomDictionary.dll
+C:\Users\Павел\RiderProjects\CustomDictionary\CustomDictionary\bin\Debug\net6.0\CustomDictionary.pdb
+C:\Users\Павел\RiderProjects\CustomDictionary\CustomDictionary\obj\Debug\net6.0\CustomDictionary.dll
+C:\Users\Павел\RiderProjects\CustomDictionary\CustomDictionary\obj\Debug\net6.0\ref\CustomDictionary.dll
+C:\Users\Павел\RiderProjects\CustomDictionary\CustomDictionary\obj\Debug\net6.0\CustomDictionary.pdb

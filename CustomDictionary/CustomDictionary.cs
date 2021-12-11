@@ -10,18 +10,16 @@ namespace CustomDictionary
     public class CustomDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
         private LinkedList<KeyValuePair<TKey, TValue>>[] _hashTable;
-        private ICollection<TKey> _keys;
-        private ICollection<TValue> _values;
-
-        private int _count = 0;
         private int _capacity = 16;
 
         public CustomDictionary()
         {
             _hashTable = new LinkedList<KeyValuePair<TKey, TValue>>[_capacity];
 
-            _keys = new List<TKey>();
-            _values = new List<TValue>();
+            Count = 0;
+            
+            Keys = new List<TKey>();
+            Values = new List<TValue>();
 
             for (int i = 0; i < _hashTable.Length; ++i)
             {
@@ -33,9 +31,11 @@ namespace CustomDictionary
         {
             _capacity = capacity;
             _hashTable = new LinkedList<KeyValuePair<TKey, TValue>>[_capacity];
+
+            Count = 0;
             
-            _keys = new List<TKey>();
-            _values = new List<TValue>();
+            Keys = new List<TKey>();
+            Values = new List<TValue>();
             
             for (int i = 0; i < _hashTable.Length; ++i)
             {
@@ -93,29 +93,11 @@ namespace CustomDictionary
             }
         }
 
-        public int Count
-        {
-            get
-            {
-                return _count;
-            }
-        }
+        public int Count { get; set; }
 
-        public ICollection<TKey> Keys
-        {
-            get
-            {
-                return _keys;
-            }
-        }
+        public ICollection<TKey> Keys { get; set; }
 
-        public ICollection<TValue> Values
-        {
-            get
-            {
-                return _values;
-            }
-        }
+        public ICollection<TValue> Values { get; set; }
 
         public bool IsReadOnly
         {
@@ -125,14 +107,34 @@ namespace CustomDictionary
             }
         }
 
+        public int Capacity
+        {
+            get
+            {
+                return _capacity;
+            }
+        }
+
         private void AllocateHashTable()
         {
             LinkedList<KeyValuePair<TKey, TValue>>[] newHashTable =
                 new LinkedList<KeyValuePair<TKey, TValue>>[_capacity * 2];
 
+            _capacity *= 2;
+
+            for (int i = 0; i < newHashTable.Length; ++i)
+            {
+                newHashTable[i] = new LinkedList<KeyValuePair<TKey, TValue>>();
+            }
+
             for (int i = 0; i < _hashTable.Length; ++i)
             {
-                newHashTable[i] = _hashTable[i];
+                foreach (var item in _hashTable[i])
+                {
+                    int hash = Math.Abs(item.Key.GetHashCode()) % _capacity;
+
+                    newHashTable[hash].AddLast(item);
+                }
             }
 
             _hashTable = newHashTable;
@@ -144,18 +146,32 @@ namespace CustomDictionary
 
             if (!ContainsKey(key))
             {
-                _count++;
-                
-                if (_count >= _capacity)
+                Count++;
+
+                bool flag = true;
+                for (int i = 0; i < _hashTable.Length; ++i)
+                {
+                    if (_hashTable[i].Count == 0)
+                    {
+                        flag = false;
+                    }
+                }
+
+                if (flag)
                 {
                     AllocateHashTable();
+                }
+                
+                if (Count >= _capacity)
+                {
+                    AllocateHashTable(); 
                 }
 
                 KeyValuePair<TKey, TValue> pair = new KeyValuePair<TKey, TValue>(key, value);
                 _hashTable[hash].AddLast(pair);
                 
-                _keys.Add(key);
-                _values.Add(value);
+                Keys.Add(key);
+                Values.Add(value);
             }
             else
             {
@@ -174,12 +190,7 @@ namespace CustomDictionary
 
             var keys = _hashTable[hash].Select(item => item.Key);
 
-            if (keys.Contains(key))
-            {
-                return true;
-            }
-
-            return false;
+            return keys.Contains(key);
         }
 
         public bool Contains(KeyValuePair<TKey, TValue> item)
@@ -193,7 +204,7 @@ namespace CustomDictionary
 
             if (ContainsKey(key))
             {
-                _count--;
+                Count--;
 
                 foreach (var item in _hashTable[hash])
                 {
@@ -235,17 +246,22 @@ namespace CustomDictionary
 
         public void Clear()
         {
+            _capacity = 16;
+            _hashTable = new LinkedList<KeyValuePair<TKey, TValue>>[_capacity];
+            Keys.Clear();
+            Values.Clear();
+            
             for (int i = 0; i < _hashTable.Length; ++i)
             {
                 _hashTable[i] = new LinkedList<KeyValuePair<TKey, TValue>>();
             }
 
-            _count = 0;
+            Count = 0;
         }
 
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
-            if (array.Length - arrayIndex - 1 < _count)
+            if (array.Length - arrayIndex - 1 < Count)
             {
                 throw new Exception("There's no space to insert elements into array.");
             }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using CustomDictionary;
 
 namespace ConsoleApp1 {
@@ -8,7 +6,9 @@ namespace ConsoleApp1 {
     {
         static void Main(string[] args)
         {
-            CustomDictionary<string, int> dict = new CustomDictionary<string, int>();
+            CustomDictionary<string, int> dict = new CustomDictionary<string, int>(4);
+
+            Console.WriteLine($"Start capacity: {dict.Capacity}");
 
             dict.Add("Pasha", 1);
             dict.Add("Serega", 2);
@@ -28,8 +28,9 @@ namespace ConsoleApp1 {
             
             dict.Add("Pasha", 1);
 
-            dict.Clear();
-            
+            dict.Remove("Pasha");
+            dict.Remove("Serega");
+
             Console.WriteLine();
             foreach (var item in dict)
             {
@@ -40,6 +41,9 @@ namespace ConsoleApp1 {
             dict.Add("Serega", 2);
             dict.Add("Levan", 3);
             dict.Add("Danil", 4);
+
+            Console.WriteLine();
+            Console.WriteLine($"Current capacity: {dict.Capacity}");
             
             Console.WriteLine();
             foreach (var item in dict)
@@ -56,6 +60,9 @@ namespace ConsoleApp1 {
             dict["Rauf"] = 10;
             
             Console.WriteLine(dict.ContainsKey("Rauf"));
+
+            dict.Count = 50;
+            Console.WriteLine(dict.Count);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CustomDictionary;
 
 namespace ConsoleApp1 {
@@ -63,6 +64,18 @@ namespace ConsoleApp1 {
 
             dict.Count = 50;
             Console.WriteLine(dict.Count);
+
+            foreach (var item in (List<string>) dict.Keys)
+            {
+                Console.Write($"{item} ");
+            }
+
+            Console.WriteLine("\n");
+            
+            foreach (var item in (List<int>) dict.Values)
+            {
+                Console.Write($"{item} ");
+            }
         }
     }
 }

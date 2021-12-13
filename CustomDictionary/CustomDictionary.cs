@@ -79,10 +79,12 @@ namespace CustomDictionary
                     {
                         if (key.Equals(cur.Value.Key))
                         {
+                            Values.Remove(cur.Value.Value);
                             LinkedListNode<KeyValuePair<TKey, TValue>> newNode =
                                 new LinkedListNode<KeyValuePair<TKey, TValue>>(
                                     new KeyValuePair<TKey, TValue>(key, value));
                             cur = newNode;
+                            Values.Add(value);
                         }
                     }
                 }
@@ -211,6 +213,8 @@ namespace CustomDictionary
                     if (key.Equals(item.Key))
                     {
                         _hashTable[hash].Remove(item);
+                        Keys.Remove(item.Key);
+                        Values.Remove(item.Value);
                         break;
                     }
                 }

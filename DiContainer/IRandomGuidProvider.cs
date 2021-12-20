@@ -1,3 +1,5 @@
+using System;
+
 namespace DiContainer
 {
     public interface IRandomGuidProvider

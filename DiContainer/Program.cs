@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.Unicode;
 using DiContainer.DependencyInjection;
 
 
@@ -20,7 +19,7 @@ namespace DiContainer
             var singletonSecond = container.GetService<IRandomGuidProvider>();
 
             var transientFirst = container.GetService<IService>();
-            var transientSecond = container.GetService<IRandomGuidProvider>();
+            var transientSecond = container.GetService<IService>();
 
             Console.WriteLine("Singletons:");
             Console.WriteLine(singletonFirst.RandomGuid);
@@ -28,7 +27,7 @@ namespace DiContainer
 
             Console.WriteLine("\nTransients:");
             transientFirst.PrintSomething();
-            Console.WriteLine(transientSecond.RandomGuid);
+            transientSecond.PrintSomething();
         }
     }
 }

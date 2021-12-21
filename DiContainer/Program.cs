@@ -1,5 +1,6 @@
 ﻿using System;
 using DiContainer.DependencyInjection;
+using DiContainer.Services;
 
 
 namespace DiContainer
@@ -10,24 +11,16 @@ namespace DiContainer
         {
             var services = new DiServiceCollection();
 
-            services.RegisterSingleton<IRandomGuidProvider, RandomGuidProvider>();
-            services.RegisterTransient<IService, FirstService>();
+            services.RegisterSingleton<IA, A>();
+            // services.RegisterTransient<IB, B>();
 
             var container = services.GenerateContainer();
 
-            var singletonFirst = container.GetService<IRandomGuidProvider>();
-            var singletonSecond = container.GetService<IRandomGuidProvider>();
+            var singletonFirst = container.GetService<IA>();
+            var singletonSecond = container.GetService<IA>();
 
-            var transientFirst = container.GetService<IService>();
-            var transientSecond = container.GetService<IService>();
-
-            Console.WriteLine("Singletons:");
-            Console.WriteLine(singletonFirst.RandomGuid);
-            Console.WriteLine(singletonSecond.RandomGuid);
-
-            Console.WriteLine("\nTransients:");
-            transientFirst.PrintSomething();
-            transientSecond.PrintSomething();
+            // var transientFirst = container.GetService<B>();
+            // var transientSecond = container.GetService<B>();
         }
     }
 }

@@ -12,19 +12,6 @@ namespace DiContainer.DependencyInjection
 
         public ServiceLifetime LifeTime { get; private set; }
 
-        public ServiceDescriptor(object implementation, ServiceLifetime lifetime)
-        {
-            ServiceType = implementation.GetType();
-            Implementation = implementation;
-            LifeTime = lifetime;
-        }
-        
-        public ServiceDescriptor(Type serviceType, ServiceLifetime lifetime)
-        {
-            ServiceType = serviceType;
-            LifeTime = lifetime;
-        }
-
         public ServiceDescriptor(Type serviceType, Type implementationType, ServiceLifetime lifetime)
         {
             ServiceType = serviceType;

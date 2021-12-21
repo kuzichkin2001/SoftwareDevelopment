@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 
 namespace DiContainer.DependencyInjection
 {
@@ -13,6 +15,13 @@ namespace DiContainer.DependencyInjection
         }
 
         public object GetService(Type serviceType)
+        {
+            List<Type> depsList = new List<Type>();
+
+            return GetService(serviceType, ref depsList);
+        }
+
+        private object GetService(Type serviceType, ref List<Type> typesList)
         {
             var descriptor = _serviceDescriptors
                 .SingleOrDefault(x => x.ServiceType == serviceType);
@@ -36,10 +45,30 @@ namespace DiContainer.DependencyInjection
 
             var constructorInfo = actualType.GetConstructors().First();
 
-            var parameters = constructorInfo.GetParameters()
-                .Select(x => GetService(x.ParameterType)).ToArray();
+            foreach (Type item in typesList)
+            {
+                Console.Write($"{item.Name} -> ");
+            }
+
+            Console.WriteLine();
             
-            var implementation = Activator.CreateInstance(actualType, parameters);
+            var parameters = constructorInfo.GetParameters();
+            List<object?> newParameters = new List<object?>();
+            foreach (var parameter in parameters)
+            {
+                var newParameter = GetService(parameter.ParameterType, ref typesList);
+                newParameters.Add(newParameter);
+            }
+            if (typesList.Contains(serviceType))
+            {
+                throw new CycleDependencyException($"The type {serviceType.Name} is already referenced." +
+                                                   $"Found cycle reference.");
+            }
+            typesList.Add(serviceType);
+
+            var resultParams = newParameters.ToArray();
+
+            var implementation = Activator.CreateInstance(actualType, resultParams);
 
             if (descriptor.LifeTime == ServiceLifetime.Singleton)
             {

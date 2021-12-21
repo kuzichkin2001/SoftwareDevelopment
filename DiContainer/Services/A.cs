@@ -4,10 +4,8 @@ namespace DiContainer.Services
 {
     public class A : IA
     {
-        public A(IA a)
-        {
-            
-        }
+        public A(IB b) {}
+        
         public void print()
         {
             Console.WriteLine("A : IA");

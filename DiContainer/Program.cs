@@ -12,15 +12,15 @@ namespace DiContainer
             var services = new DiServiceCollection();
 
             services.RegisterSingleton<IA, A>();
-            // services.RegisterTransient<IB, B>();
+            services.RegisterTransient<IB, B>();
 
             var container = services.GenerateContainer();
 
             var singletonFirst = container.GetService<IA>();
             var singletonSecond = container.GetService<IA>();
 
-            // var transientFirst = container.GetService<B>();
-            // var transientSecond = container.GetService<B>();
+            var transientFirst = container.GetService<IB>();
+            var transientSecond = container.GetService<IB>();
         }
     }
 }

@@ -56,15 +56,15 @@ namespace DiContainer.DependencyInjection
             List<object?> newParameters = new List<object?>();
             foreach (var parameter in parameters)
             {
+                if (typesList.Contains(serviceType))
+                {
+                    throw new CycleDependencyException($"The type {serviceType.Name} is already referenced." +
+                                                       $"Found cycle reference.");
+                }
+                typesList.Add(serviceType);
                 var newParameter = GetService(parameter.ParameterType, ref typesList);
                 newParameters.Add(newParameter);
             }
-            if (typesList.Contains(serviceType))
-            {
-                throw new CycleDependencyException($"The type {serviceType.Name} is already referenced." +
-                                                   $"Found cycle reference.");
-            }
-            typesList.Add(serviceType);
 
             var resultParams = newParameters.ToArray();
 

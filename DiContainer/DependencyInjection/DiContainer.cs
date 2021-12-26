@@ -58,7 +58,7 @@ namespace DiContainer.DependencyInjection
             {
                 if (typesList.Contains(serviceType))
                 {
-                    throw new CycleDependencyException($"The type {serviceType.Name} is already referenced." +
+                    throw new CycleDependencyException($"The type {serviceType.Name} is already referenced. " +
                                                        $"Found cycle reference.");
                 }
                 typesList.Add(serviceType);
